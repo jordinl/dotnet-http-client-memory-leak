@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+url="https://www.domcop.com/files/top/top10milliondomains.csv"
+curl -s $url | tail -n +2 | head -n 100000 | awk -F '","' '{print "https://"$2}' > urls.txt

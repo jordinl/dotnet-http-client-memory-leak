@@ -1,0 +1,14 @@
+﻿services:
+  dotnet-http-client-memory-leak:
+    image: dotnet-http-client-memory-leak
+    environment:
+      - LIMIT
+      - CONCURRENCY
+    build:
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 2G
