@@ -14,31 +14,25 @@
 
         var start = DateTime.Now;
         var urls = File.ReadLines("urls.txt").Take(Limit);
-        var semaphore = new SemaphoreSlim(Concurrency, Concurrency);
+        var parallelOptions = new ParallelOptions { MaxDegreeOfParallelism = Concurrency };
 
-        var tasks = urls.Select(async url =>
+        await Parallel.ForEachAsync(urls, parallelOptions, async (url, cancellationToken) =>
         {
-            await semaphore.WaitAsync();
             string code;
 
             try
             {
-                using var response = await HttpClient.GetAsync(url);
+                using var response = await HttpClient.GetAsync(url, cancellationToken);
                 code = ((int)response.StatusCode).ToString();
             }
             catch (Exception ex)
             {
                 code = (ex.InnerException ?? ex).GetType().Name;
             }
-            finally
-            {
-                semaphore.Release();
-            }
 
             Console.WriteLine($"{url}: {code}");
         });
 
-        await Task.WhenAll(tasks);
         Console.WriteLine($"Finished: {DateTime.Now - start}");
     }
 }
