@@ -1,7 +1,7 @@
 ﻿class Program
 {
     private static readonly HttpClient HttpClient = new();
-    private static readonly int Concurrency = int.Parse(Environment.GetEnvironmentVariable("CONCURRENCY") ?? "20");
+    private static readonly int Concurrency = int.Parse(Environment.GetEnvironmentVariable("CONCURRENCY") ?? "10");
     private static readonly int Limit = int.Parse(Environment.GetEnvironmentVariable("LIMIT") ?? "1000");
 
     static async Task Main()
@@ -24,6 +24,7 @@
             {
                 using var response = await HttpClient.GetAsync(url, cancellationToken);
                 code = ((int)response.StatusCode).ToString();
+                var body = await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
