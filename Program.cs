@@ -24,7 +24,6 @@
             {
                 using var response = await HttpClient.GetAsync(url, cancellationToken);
                 code = ((int)response.StatusCode).ToString();
-                var body = await response.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
