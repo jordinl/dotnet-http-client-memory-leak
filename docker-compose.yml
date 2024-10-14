@@ -12,3 +12,4 @@
         limits:
           cpus: "1.0"
           memory: 2G
+    network_mode: host
