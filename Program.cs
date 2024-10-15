@@ -11,6 +11,7 @@
         Console.WriteLine($" * Limit: {Limit}");
 
         HttpClient.Timeout = TimeSpan.FromSeconds(5);
+        HttpClient.DefaultRequestHeaders.ConnectionClose = true;
 
         var start = DateTime.Now;
         var urls = File.ReadLines("urls.txt").Take(Limit);
