@@ -1,6 +1,6 @@
 ﻿class Program
 {
-    private static readonly SocketsHttpHandler HttpHandler = new() { PooledConnectionIdleTimeout = TimeSpan.FromSeconds(1) };
+    private static readonly SocketsHttpHandler HttpHandler = new() { PooledConnectionIdleTimeout = TimeSpan.Zero, PooledConnectionLifetime = TimeSpan.Zero };
     private static readonly HttpClient HttpClient = new(HttpHandler);
     private static readonly int Concurrency = int.Parse(Environment.GetEnvironmentVariable("CONCURRENCY") ?? "10");
     private static readonly int Limit = int.Parse(Environment.GetEnvironmentVariable("LIMIT") ?? "1000");
